@@ -1,0 +1,7 @@
+{
+  "name": "Plantify",
+  "description": "Instantly identify plants and get detailed care instructions using Google Gemini AI.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
