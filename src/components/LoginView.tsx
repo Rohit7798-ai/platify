@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Mail, Lock, Leaf, ArrowRight, Loader2, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Leaf, ArrowRight, Loader2, Eye, EyeOff, User } from 'lucide-react';
 
 interface LoginViewProps {
     initialMode?: 'signin' | 'signup' | 'reset' | 'updatePassword';
@@ -157,7 +157,7 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
                         {mode === 'signup' && (
                             <div className="relative group animate-spring-in">
                                 <div className="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                                    <span className="material-symbols-outlined text-lg text-emerald-900/40 group-focus-within:text-emerald-600 transition-colors">person</span>
+                                    <User className="w-5 h-5 text-emerald-900/40 group-focus-within:text-emerald-600 transition-colors" />
                                 </div>
                                 <input
                                     type="text"
