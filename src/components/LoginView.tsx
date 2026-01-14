@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Mail, Lock, Github, Chrome, Leaf, ArrowRight, Loader2, Eye, EyeOff } from 'lucide-react';
+import { Mail, Lock, Leaf, ArrowRight, Loader2, Eye, EyeOff } from 'lucide-react';
 
 interface LoginViewProps {
     initialMode?: 'signin' | 'signup' | 'reset' | 'updatePassword';
@@ -59,7 +59,7 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
                 alert('Check your email for the confirmation link!');
             } else if (mode === 'reset') {
                 const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                    redirectTo: `${window.location.host === 'localhost:5173' ? 'http://localhost:5173' : window.location.origin}`,
+                    redirectTo: `${window.location.origin}`,
                 });
                 if (error) throw error;
                 setResetSent(true);
@@ -81,19 +81,7 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
         }
     };
 
-    const handleSocialLogin = async (provider: 'google' | 'github') => {
-        try {
-            const { error } = await supabase.auth.signInWithOAuth({
-                provider,
-                options: {
-                    redirectTo: window.location.origin
-                }
-            });
-            if (error) throw error;
-        } catch (err: any) {
-            setError(err.message);
-        }
-    };
+
 
     return (
         <div className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden font-body bg-[#121A15]">
@@ -159,8 +147,8 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
                     )}
 
                     {error && (
-                        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-200 text-xs font-medium animate-shake text-center">
-                            {error}
+                        <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-700 text-sm font-medium animate-spring-in text-center">
+                            ⚠️ {error}
                         </div>
                     )}
 
@@ -266,33 +254,7 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
                         </button>
                     </form>
 
-                    {/* Divider */}
-                    <div className="relative my-8">
-                        <div className="absolute inset-0 flex items-center">
-                            <div className="w-full border-t border-emerald-900/10"></div>
-                        </div>
-                        <div className="relative flex justify-center text-xs uppercase">
-                            <span className="bg-white/0 backdrop-blur-sm px-4 text-emerald-900/30 font-bold tracking-widest">Or continue with</span>
-                        </div>
-                    </div>
 
-                    {/* Social Buttons */}
-                    <div className="grid grid-cols-2 gap-4">
-                        <button
-                            onClick={() => handleSocialLogin('google')}
-                            className="flex items-center justify-center gap-3 bg-white border border-emerald-900/10 hover:bg-emerald-50/50 text-emerald-900 font-semibold py-3.5 rounded-2xl transition-all duration-300 group shadow-sm"
-                        >
-                            <Chrome className="w-5 h-5 text-[#4285F4]" />
-                            <span className="text-sm">Google</span>
-                        </button>
-                        <button
-                            onClick={() => handleSocialLogin('github')}
-                            className="flex items-center justify-center gap-3 bg-white border border-emerald-900/10 hover:bg-emerald-50/50 text-emerald-900 font-semibold py-3.5 rounded-2xl transition-all duration-300 group shadow-sm"
-                        >
-                            <Github className="w-5 h-5 text-black" />
-                            <span className="text-sm">GitHub</span>
-                        </button>
-                    </div>
 
                     {/* Footer Credits */}
                     <p className="mt-10 text-center text-emerald-900/20 text-[10px] font-medium tracking-[0.2em] uppercase">

@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "loginUser": "rohit@rohit.com",
+  "loginPassword": "Rohit2213#",
+  "executionArgs": {
+    "projectName": "plantify",
+    "projectPath": "C:\\Users\\Sarvadnya\\OneDrive\\Desktop\\plantify",
+    "testIds": [],
+    "additionalInstruction": "",
+    "envs": {
+      "API_KEY": "sk-user-JtycFlgeB7LVwXIodNBfddai8Q2QwjqRy0FjWe8HWMjivcf8U_tzFfeFEYnh-dKxRPscZJpydA-SljkwQ2TaqVVQcaePWmpZzfOO-wTWxfVSv5eR3xa_gpOwjBvs3_fiFvc"
+    }
+  },
+  "proxy": "http://525a5843-5d9a-4fb6-84b1-2b4a1a1e2e1c:qsIL6koNfzF1ddC8eEz7YedQGjkkaafs@tun.testsprite.com:8080"
+}

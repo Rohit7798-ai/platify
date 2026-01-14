@@ -1,0 +1,122 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "React",
+    "Vite",
+    "Supabase",
+    "Tailwind CSS"
+  ],
+  "features": [
+    {
+      "name": "Authentication & User Profile",
+      "description": "User sign-in, session handling, profile display, and Supabase-backed user data.",
+      "files": [
+        "App.tsx",
+        "src/components/LoginView.tsx",
+        "src/lib/supabase.ts",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Home View & Entry Points",
+      "description": "Landing experience with scan entry points, plant doctor shortcut, weekly stats, and recent scans carousel.",
+      "files": [
+        "App.tsx",
+        "components/HomeView.tsx",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Camera Capture & Upload",
+      "description": "Camera access, capture flow, gallery upload, and diagnostic/identify mode handling.",
+      "files": [
+        "components/CameraView.tsx",
+        "App.tsx"
+      ]
+    },
+    {
+      "name": "AI Plant Identification",
+      "description": "Gemini-based plant identification and diagnosis including image compression and API integration.",
+      "files": [
+        "services/geminiService.ts",
+        "App.tsx",
+        "components/AnalyzingView.tsx",
+        "components/PlantResult.tsx",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Analyzing & Loading Experience",
+      "description": "Full-screen analyzing state with rotating loading messages and animated progress for scans.",
+      "files": [
+        "components/AnalyzingView.tsx",
+        "App.tsx"
+      ]
+    },
+    {
+      "name": "Plant Result & Diagnosis View",
+      "description": "Rich result screen with identification details, health assessment, care info, similar plants, share and report actions.",
+      "files": [
+        "components/PlantResult.tsx",
+        "components/PlantDetailView.tsx",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Collection Management",
+      "description": "Save, list, and view plant collection items backed by Supabase tables.",
+      "files": [
+        "components/CollectionView.tsx",
+        "App.tsx",
+        "src/lib/supabase.ts",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Scan History & Explore View",
+      "description": "Display scan history and allow navigation into detailed plant results.",
+      "files": [
+        "components/ExploreView.tsx",
+        "App.tsx",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Community & Assistant Views",
+      "description": "Community feed shell and AI assistant experience for plant-related help.",
+      "files": [
+        "components/CommunityView.tsx",
+        "components/AssistantView.tsx",
+        "services/geminiService.ts",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Profile & Settings",
+      "description": "User profile display, collection stats, and dark mode toggle.",
+      "files": [
+        "components/ProfileView.tsx",
+        "App.tsx",
+        "types.ts"
+      ]
+    },
+    {
+      "name": "Navigation Layout",
+      "description": "Bottom navigation bar and high-level routing between primary views.",
+      "files": [
+        "components/BottomNav.tsx",
+        "App.tsx"
+      ]
+    },
+    {
+      "name": "AR & Tools & Guides Shell",
+      "description": "Placeholder AR view and utility views for tools, guides, and consultations.",
+      "files": [
+        "components/ARView.tsx",
+        "components/ToolsView.tsx",
+        "components/GuidesView.tsx",
+        "components/ConsultView.tsx"
+      ]
+    }
+  ]
+}

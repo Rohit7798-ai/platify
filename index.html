@@ -5,129 +5,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+  <!-- SEO Meta Tags -->
+  <meta name="description"
+    content="Plantify - Your intelligent botanical companion. Identify plants instantly with AI-powered image recognition.">
+  <meta name="keywords" content="plant identification, botanical AI, plant care, plant diagnosis">
+
+  <!-- Font Preconnects for faster loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@100..900&display=swap"
-    rel="stylesheet">
+
   <title>Plantify - Smart Plant Identification</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <link href="https://fonts.googleapis.com" rel="preconnect" />
-  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
-    rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
-    rel="stylesheet" />
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#D6F3E1",
-            "secondary": "#A9E5BB",
-            "accent": "#FDE2D4",
 
-            // New Palette
-            "forest": "#2D6A4F",
-            "sage": "#95D5B2",
-            "warm-white": "#F8F9FA",
-
-            "text-primary": "#1A2E22",
-            "text-secondary": "#596F62",
-            "background-light": "#F9FAF8",
-            "background-dark": "#121A15",
-
-            // Result Screen Colors
-            "custom-cream": "#FDFBF8",
-            "custom-green": "#74B78C",
-            "custom-mint": "#E8F5EE",
-            "custom-charcoal": "#2D3A33",
-            "custom-gray-text": "#75867C",
-            "custom-gray-border": "#EAEAEA",
-            "text-light": "#141e16",
-            "text-dark": "#f6f8f6",
-            "cream": "#FEFBF6",
-
-            // Collection Screen Colors
-            "col-primary": "#ADC6BD",
-            "col-primary-light": "#E9F1EE",
-            "col-primary-dark": "#5A7D70",
-            "col-surface-light": "#FFFFFF",
-            "col-surface-dark": "#1C2520",
-            "col-text-light": "#1B2F23",
-            "col-text-dark": "#E2E3E2",
-            "col-text-sec-light": "#6B8578",
-            "col-text-sec-dark": "#9DAFAC",
-          },
-          fontFamily: {
-            "display": ["Poppins", "sans-serif"],
-            "body": ["Inter", "sans-serif"],
-            "poppins": ["Poppins", "sans-serif"],
-            "playfair": ["Playfair Display", "serif"]
-          },
-          borderRadius: {
-            "DEFAULT": "1.25rem",
-            "lg": "1.5rem",
-            "xl": "2.5rem",
-          },
-          boxShadow: {
-            'modern': '0 8px 32px 0 rgba(0, 0, 0, 0.08)',
-            'modern-dark': '0 8px 32px 0 rgba(0, 0, 0, 0.2)',
-            'subtle': '0 4px 12px 0 rgba(0, 0, 0, 0.05)',
-            'subtle-dark': '0 4px 12px 0 rgba(0, 0, 0, 0.15)',
-          },
-          animation: {
-            'ripple': 'ripple 1s cubic-bezier(0, 0, 0.2, 1) forwards',
-            'sweep': 'sweep 2s ease-in-out infinite',
-            'spring-in': 'spring-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-          },
-          keyframes: {
-            ripple: {
-              '0%': { transform: 'scale(1)', opacity: '0.6' },
-              '100%': { transform: 'scale(1.5)', opacity: '0' },
-            },
-            sweep: {
-              '0%, 100%': { transform: 'translateX(-100%)' },
-              '50%': { transform: 'translateX(100%)' },
-            },
-            'spring-in': {
-              '0%': { opacity: '0', transform: 'scale(0.8) translateY(10px)' },
-              '100%': { opacity: '1', transform: 'scale(1) translateY(0)' },
-            },
-          },
-        },
-      },
-    }
-  </script>
-  <style>
-    .material-symbols-outlined {
-      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    }
-
-    body {
-      min-height: 100dvh;
-      font-family: 'Inter', sans-serif;
-    }
-
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      scrollbar-width: none;
-    }
-
-    .frame-overlay {
-      mask-image: radial-gradient(circle at center, transparent 0%, transparent 98%, black 100%),
-        linear-gradient(white, white);
-      mask-composite: exclude;
-      -webkit-mask-composite: destination-out;
-    }
-  </style>
-
+  <!-- CSS is now processed via PostCSS/Tailwind locally -->
   <link rel="stylesheet" href="/index.css">
 </head>
 

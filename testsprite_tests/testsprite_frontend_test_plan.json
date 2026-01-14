@@ -1,0 +1,463 @@
+[
+  {
+    "id": "TC001",
+    "title": "Sign up with valid credentials",
+    "description": "Verify that a new user can successfully sign up with valid email and password and receive confirmation of account creation.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the sign-up page"
+      },
+      {
+        "type": "action",
+        "description": "Input a valid email address and a strong password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the sign-up form"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the user is registered and redirected to the home or profile page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that a session is created and user is marked as signed in"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Sign in with correct credentials",
+    "description": "Check that existing users can sign in with valid email and password and maintain session state.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to sign-in page"
+      },
+      {
+        "type": "action",
+        "description": "Enter registered email and correct password"
+      },
+      {
+        "type": "action",
+        "description": "Click the sign-in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm successful login and redirection to home view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the session persists on page reload"
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Sign in failure with invalid credentials",
+    "description": "Ensure that sign-in fails when using incorrect email or password and relevant error is displayed.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to sign-in page"
+      },
+      {
+        "type": "action",
+        "description": "Enter unregistered email or incorrect password"
+      },
+      {
+        "type": "action",
+        "description": "Click the sign-in button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error message indicating invalid credentials is shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure user is not logged in or redirected"
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Persistent user session across visits",
+    "description": "Check that once logged in, user session persists on browser close and reopen without requiring re-login.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Sign in with valid credentials"
+      },
+      {
+        "type": "action",
+        "description": "Close browser window and reopen the application URL"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user is still signed in and authorized views accessible"
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Display all Home View elements",
+    "description": "Verify that Home View shows scan entry points, plant doctor shortcut, weekly stats, and recent scans carousel.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the home page after logging in"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the scan plant entry buttons are visible and clickable"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that the plant doctor shortcut is present"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm weekly stats are displayed accurately"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure recent scans carousel shows past identified plants"
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Camera capture flow for plant identification",
+    "description": "Test the process of capturing an image via camera to trigger plant identification analysis.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "From Home View, initiate camera capture for plant identification"
+      },
+      {
+        "type": "action",
+        "description": "Allow camera permissions if prompted"
+      },
+      {
+        "type": "action",
+        "description": "Capture a clear image of a plant"
+      },
+      {
+        "type": "action",
+        "description": "Submit image for AI identification"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that analyzing/loading screen is shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm plant identification results are displayed with details and care information"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Image upload for plant diagnosis",
+    "description": "Verify user can upload a plant image from device storage for health diagnosis and receive correct AI results.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "From Home View, select upload option for plant diagnosis"
+      },
+      {
+        "type": "action",
+        "description": "Upload a valid plant image file"
+      },
+      {
+        "type": "action",
+        "description": "Submit image for AI diagnosis"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure analyzing/loading animation is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate the diagnosis view shows health status and treatment recommendations"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Handle AI service error during identification",
+    "description": "Check that application properly handles failures from the AI plant identification service and displays user-friendly error messages.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate AI service returning an error during image analysis"
+      },
+      {
+        "type": "action",
+        "description": "Submit a plant image for identification"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm error state is handled gracefully with an informative message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that user can retry or cancel the operation"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Save identified plant to personal collection",
+    "description": "Verify the process of saving a plant from the identification result to the user's collection with backend synchronization.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Complete an AI plant identification and arrive at the result view"
+      },
+      {
+        "type": "action",
+        "description": "Click the 'Save to Collection' button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that the plant is added to the user's collection and persists in the backend"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to the Collection View"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the newly saved plant is visible in the collection list"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "View and delete plant from collection",
+    "description": "Check that users can view details of saved plants and delete them, with changes reflected on backend and UI updates.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to Collection View"
+      },
+      {
+        "type": "action",
+        "description": "Select a plant item to view its details"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify detailed plant info is displayed correctly"
+      },
+      {
+        "type": "action",
+        "description": "Use the delete option to remove the plant from collection"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm plant is removed from the list and backend database"
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Navigation bar routing and active view highlighting",
+    "description": "Validate that bottom navigation bar routes correctly between Home, Explore, Community, Assistant, and Profile views and highlights the active route.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "At any screen, click on each navigation tab one by one"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify application navigates to corresponding views without error"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that the selected navigation item is visually highlighted"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Explore View shows scan history and allows result navigation",
+    "description": "Test that the Explore View lists past scans and allows users to click an entry to see detailed plant results.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to Explore View after having performed several plant scans"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm scan history is listed with date and summary"
+      },
+      {
+        "type": "action",
+        "description": "Select a history entry"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the detailed plant result page is displayed for the selected scan"
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Profile View displays user info and dark mode toggle",
+    "description": "Ensure user profile details, collection statistics, and dark mode toggle are present and functional in Profile View.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to Profile View"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user profile information is shown correctly"
+      },
+      {
+        "type": "assertion",
+        "description": "Check collection statistics are accurate and visible"
+      },
+      {
+        "type": "action",
+        "description": "Toggle the dark mode setting"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify UI theme switches between light and dark modes accordingly"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Offline mode disables camera/upload and shows notification",
+    "description": "Test that when offline, the app disables camera and upload functions, informs the user, but allows viewing previously cached data.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Simulate offline network state"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to Home View"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify camera capture and upload buttons are disabled or hidden"
+      },
+      {
+        "type": "assertion",
+        "description": "Check an offline notification or message is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to Collection or Explore View"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm that cached plant collection and scan history data are accessible and displayed"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Responsive design across device types and screen sizes",
+    "description": "Verify that the application UI adapts correctly and remains usable on multiple screen sizes and devices.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Load the app on desktop, tablet, and mobile viewport sizes"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm UI elements resize and reposition properly without overflow or truncation"
+      },
+      {
+        "type": "assertion",
+        "description": "Check navigation and buttons remain fully functional on all device configurations"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Loading and progress states during AI analysis",
+    "description": "Test that the analyzing/loading screen shows appropriate animations, rotating messages, and progress indicators during plant image processing.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Initiate plant identification or diagnosis by submitting an image"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the full-screen analyzing screen with rotating loading messages appears"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm presence of animated progress indicators"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure the UI transitions smoothly from analyzing to result view"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "UI handles image loading errors gracefully",
+    "description": "Ensure that if plant images or thumbnails fail to load in any view, the UI handles errors without breaking layout and shows placeholders or error indicators.",
+    "category": "error handling",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Modify image URL to a broken or invalid path"
+      },
+      {
+        "type": "action",
+        "description": "Load views with plant images such as Collection or Result View"
+      },
+      {
+        "type": "assertion",
+        "description": "Check that a placeholder or error icon appears instead of broken images"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure layout remains consistent and no crashes occur"
+      }
+    ]
+  }
+]

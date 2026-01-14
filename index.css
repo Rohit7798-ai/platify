@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/* Font Imports with fallbacks for offline mode */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Poppins:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
+/* Custom theme using Tailwind v4 @theme directive */
+@theme {
+  /* Colors */
+  --color-primary: #D6F3E1;
+  --color-secondary: #A9E5BB;
+  --color-accent: #FDE2D4;
+
+  --color-forest: #2D6A4F;
+  --color-sage: #95D5B2;
+  --color-warm-white: #F8F9FA;
+
+  --color-text-primary: #1A2E22;
+  --color-text-secondary: #596F62;
+  --color-background-light: #F9FAF8;
+  --color-background-dark: #121A15;
+
+  --color-custom-cream: #FDFBF8;
+  --color-custom-green: #74B78C;
+  --color-custom-mint: #E8F5EE;
+  --color-custom-charcoal: #2D3A33;
+  --color-custom-gray-text: #75867C;
+  --color-custom-gray-border: #EAEAEA;
+  --color-text-light: #141e16;
+  --color-text-dark: #f6f8f6;
+  --color-cream: #FEFBF6;
+
+  --color-col-primary: #ADC6BD;
+  --color-col-primary-light: #E9F1EE;
+  --color-col-primary-dark: #5A7D70;
+  --color-col-surface-light: #FFFFFF;
+  --color-col-surface-dark: #1C2520;
+  --color-col-text-light: #1B2F23;
+  --color-col-text-dark: #E2E3E2;
+  --color-col-text-sec-light: #6B8578;
+  --color-col-text-sec-dark: #9DAFAC;
+
+  /* Font Families */
+  --font-display: "Poppins", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-playfair: "Playfair Display", serif;
+
+  /* Border Radius */
+  --radius: 1.25rem;
+  --radius-lg: 1.5rem;
+  --radius-xl: 2.5rem;
+
+  /* Box Shadows */
+  --shadow-modern: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  --shadow-modern-dark: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  --shadow-subtle: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  --shadow-subtle-dark: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+
+  /* Animations */
+  --animate-ripple: ripple 1s cubic-bezier(0, 0, 0.2, 1) forwards;
+  --animate-sweep: sweep 2s ease-in-out infinite;
+  --animate-spring-in: spring-in 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Keyframes */
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+@keyframes sweep {
+
+  0%,
+  100% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spring-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+
+  75% {
+    transform: translateX(-5px);
+  }
+}
+
+/* Material Symbols configuration */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* Base body styles with font fallback */
+body {
+  min-height: 100dvh;
+  font-family: var(--font-body);
+}
+
+/* Scrollbar hiding */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Frame overlay effect */
+.frame-overlay {
+  mask-image: radial-gradient(circle at center, transparent 0%, transparent 98%, black 100%),
+    linear-gradient(white, white);
+  mask-composite: exclude;
+  -webkit-mask-composite: destination-out;
+}
+
+/* Animation utilities */
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-spring-in {
+  animation: var(--animate-spring-in);
+}
+
+.animate-ripple {
+  animation: var(--animate-ripple);
+}
+
+.animate-sweep {
+  animation: var(--animate-sweep);
+}
