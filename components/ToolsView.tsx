@@ -1,5 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { useWaterCalculator } from '../src/hooks/usePlantify';
 
 const ToolsView: React.FC = () => {
   const [activeTool, setActiveTool] = useState<'calculator' | 'lightmeter'>('calculator');
@@ -42,31 +43,10 @@ const WaterCalculator: React.FC = () => {
   const [plantType, setPlantType] = useState('tropical');
   const [potSize, setPotSize] = useState('6');
   const [season, setSeason] = useState('summer');
-  const [result, setResult] = useState<{ freq: string, amount: string } | null>(null);
+  const { mutateAsync: execute, data: result, isPending: isLoading, error } = useWaterCalculator();
 
-  const calculate = () => {
-    // Basic heuristic logic
-    let baseDays = 7;
-    let amountMl = 250;
-
-    // Adjust for plant type
-    if (plantType === 'succulent') { baseDays = 14; amountMl = 100; }
-    if (plantType === 'tropical') { baseDays = 7; amountMl = 300; }
-    if (plantType === 'fern') { baseDays = 4; amountMl = 200; }
-
-    // Adjust for pot size
-    const size = parseInt(potSize);
-    if (size > 8) { baseDays += 2; amountMl *= 1.5; }
-    if (size < 5) { baseDays -= 2; amountMl *= 0.7; }
-
-    // Adjust for season
-    if (season === 'winter') { baseDays *= 1.5; amountMl *= 0.8; }
-    if (season === 'summer') { baseDays *= 0.8; }
-
-    setResult({
-      freq: `Every ${Math.round(baseDays)} days`,
-      amount: `${Math.round(amountMl)} ml (${(amountMl / 240).toFixed(1)} cups)`
-    });
+  const calculate = async () => {
+    await execute({ plantType, potSize: parseInt(potSize), season });
   };
 
   return (
@@ -137,7 +117,7 @@ const WaterCalculator: React.FC = () => {
             <div className="flex items-center justify-center gap-8 mt-2">
               <div>
                 <p className="text-xs text-blue-600 dark:text-blue-300 uppercase tracking-wide">Frequency</p>
-                <p className="text-xl font-bold text-blue-900 dark:text-white">{result.freq}</p>
+                <p className="text-xl font-bold text-blue-900 dark:text-white">{(result as any).frequency || (result as any).freq}</p>
               </div>
               <div className="w-px h-10 bg-blue-200 dark:bg-blue-700"></div>
               <div>

@@ -1,9 +1,10 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { UserProfile } from '../types';
+import { useCollection } from '../src/hooks/usePlantify';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileViewProps {
-  collectionCount: number;
   isDarkMode: boolean;
   onToggleDarkMode: () => void;
   onViewCollection?: () => void;
@@ -13,7 +14,6 @@ interface ProfileViewProps {
 }
 
 const ProfileView: React.FC<ProfileViewProps> = ({
-  collectionCount,
   isDarkMode,
   onToggleDarkMode,
   onViewCollection,
@@ -21,6 +21,10 @@ const ProfileView: React.FC<ProfileViewProps> = ({
   onUpdateProfile,
   onLogout
 }) => {
+  const navigate = useNavigate();
+  const { data: collectionData } = useCollection();
+  
+  const collectionCount = collectionData?.data ? (collectionData.data as any[]).length : (collectionData as unknown as any[])?.length || 0;
   const [isEditing, setIsEditing] = useState(!userProfile);
   const [formData, setFormData] = useState({
     name: userProfile?.name || '',
@@ -277,6 +281,16 @@ const ProfileView: React.FC<ProfileViewProps> = ({
             <span className="material-symbols-outlined text-gray-400">chevron_right</span>
           </div>
 
+          <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors" onClick={() => navigate('/history')}>
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400">
+                <span className="material-symbols-outlined">history</span>
+              </div>
+              <span className="font-medium text-text-primary dark:text-white">Scan History</span>
+            </div>
+            <span className="material-symbols-outlined text-gray-400">chevron_right</span>
+          </div>
+
           <div className="p-4 flex items-center justify-between cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-full bg-pink-50 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400">
@@ -288,7 +302,7 @@ const ProfileView: React.FC<ProfileViewProps> = ({
           </div>
         </div>
 
-        {/* Logout */}
+        {/* Edit Profile */}
         <button
           onClick={() => setIsEditing(true)}
           className="w-full py-4 text-text-primary dark:text-white font-semibold bg-white dark:bg-white/5 rounded-full shadow-subtle dark:shadow-subtle-dark hover:bg-black/5 dark:hover:bg-white/10 hover:translate-y-[-1px] transition-all mb-4"
@@ -296,12 +310,13 @@ const ProfileView: React.FC<ProfileViewProps> = ({
           Edit Profile
         </button>
 
+        {/* Log Out */}
         <button
           onClick={onLogout}
-          className="w-full py-4 text-red-500 font-bold bg-red-50 dark:bg-red-900/10 rounded-full shadow-subtle dark:shadow-subtle-dark border border-red-100 dark:border-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/20 hover:translate-y-[-1px] active:scale-[0.98] transition-all flex items-center justify-center gap-2 mb-6"
+          className="w-full py-4 text-white font-semibold bg-gradient-to-r from-red-500 to-rose-600 dark:from-red-600 dark:to-rose-700 hover:from-red-600 hover:to-rose-700 dark:hover:from-red-700 dark:hover:to-rose-800 rounded-full shadow-lg shadow-red-500/20 dark:shadow-red-900/30 hover:shadow-xl hover:translate-y-[-2px] active:scale-98 transition-all duration-300 flex items-center justify-center gap-2"
         >
-          <span className="material-symbols-outlined">logout</span>
-          Sign Out
+          <span className="material-symbols-outlined text-lg">logout</span>
+          Log Out
         </button>
 
         <p className="text-center text-xs text-text-secondary dark:text-gray-500 pb-4">Version 2.4.0</p>

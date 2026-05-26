@@ -1,9 +1,28 @@
 
+export interface SpeciesClassification {
+  kingdom: string;
+  family: string;
+  genus: string;
+  species: string;
+}
+
+export interface PossibleMatch {
+  commonName: string;
+  scientificName: string;
+  probability: number;
+}
+
+export interface LowConfidenceDetails {
+  possibleMatches: PossibleMatch[];
+  suggestions: string[];
+}
+
 export interface CareInstructions {
   light: string;
   water: string;
   soil: string;
   fertilizer: string;
+  growthConditions?: string;
 }
 
 export interface SimilarPlant {
@@ -27,9 +46,16 @@ export interface PlantData {
   careInstructions: CareInstructions;
   funFact: string;
   isToxic: boolean;
+  toxicityDetails?: string;
   matchScore: number;
+  confidenceScore?: number;
+  speciesClassification?: SpeciesClassification;
+  medicinalOrAgriculturalUses?: string;
   similarPlants: SimilarPlant[];
   healthAssessment?: HealthAssessment;
+  lowConfidenceDetails?: LowConfidenceDetails | null;
+  analysis_history?: Array<PlantData & { date: string; image: string }>;
+  is_liked?: boolean;
 }
 
 export interface IdentificationState {

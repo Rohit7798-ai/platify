@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { supabase } from '../lib/supabase';
+import { useAuth } from '../store/useAuthStore';
 import { Mail, Lock, Leaf, ArrowRight, Loader2, Eye, EyeOff, User } from 'lucide-react';
 
 interface LoginViewProps {
@@ -18,19 +18,15 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
     const [mode, setMode] = useState<'signin' | 'signup' | 'reset' | 'updatePassword'>(initialMode);
     const [resetSent, setResetSent] = useState(false);
 
-    // Sync mode if initialMode prop changes (important for recovery redirect)
-    React.useEffect(() => {
-        setMode(initialMode);
-    }, [initialMode]);
+    const { login, register, resetPassword, updatePassword } = useAuth();
 
+    // Handle URL parameters for recovery/reset
     React.useEffect(() => {
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-            if (event === 'PASSWORD_RECOVERY') {
-                setMode('updatePassword');
-            }
-        });
-
-        return () => subscription.unsubscribe();
+        const params = new URLSearchParams(window.location.search);
+        const modeParam = params.get('mode');
+        if (modeParam === 'updatePassword') {
+            setMode('updatePassword');
+        }
     }, []);
 
     const handleEmailLogin = async (e: React.FormEvent) => {
@@ -40,38 +36,19 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
 
         try {
             if (mode === 'signin') {
-                const { error } = await supabase.auth.signInWithPassword({
-                    email,
-                    password,
-                });
-                if (error) throw error;
+                await login(email, password);
+                if (onComplete) onComplete();
             } else if (mode === 'signup') {
-                const { error } = await supabase.auth.signUp({
-                    email,
-                    password,
-                    options: {
-                        data: {
-                            full_name: fullName,
-                        }
-                    }
-                });
-                if (error) throw error;
-                alert('Check your email for the confirmation link!');
+                await register(email, password, fullName);
+                alert('Registration successful! Please check your email to verify your account before logging in.');
+                setMode('signin');
             } else if (mode === 'reset') {
-                const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                    redirectTo: `${window.location.origin}`,
-                });
-                if (error) throw error;
+                await resetPassword(email);
                 setResetSent(true);
             } else if (mode === 'updatePassword') {
-                const { error } = await supabase.auth.updateUser({
-                    password: password,
-                });
-                if (error) throw error;
+                await updatePassword(password);
                 alert('Password updated successfully!');
-                if (onComplete) {
-                    onComplete();
-                }
+                if (onComplete) onComplete();
                 setMode('signin');
             }
         } catch (err: any) {
@@ -251,6 +228,27 @@ const LoginView: React.FC<LoginViewProps> = ({ initialMode = 'signin', onComplet
                                     <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </>
                             )}
+                        </button>
+
+                        {/* Demo Mode Button */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                localStorage.setItem('plantify_user', JSON.stringify({
+                                    id: 'demo-user',
+                                    name: 'Demo User',
+                                    email: 'demo@plantify.ai',
+                                    image: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100&q=80',
+                                    joinedDate: new Date().toLocaleDateString(),
+                                    level: 5
+                                }));
+                                localStorage.setItem('plantify_access_token', 'demo-token');
+                                window.location.reload();
+                            }}
+                            className="w-full mt-4 py-3 text-xs font-bold text-emerald-700/60 hover:text-emerald-700 uppercase tracking-widest transition-colors flex items-center justify-center gap-2"
+                        >
+                            <Leaf className="w-3 h-3" />
+                            Skip Login (Demo Mode)
                         </button>
                     </form>
 

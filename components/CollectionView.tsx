@@ -1,27 +1,31 @@
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { PlantItem } from '../types';
+import { useCollection, useRemoveFromCollection } from '../src/hooks/usePlantify';
 
 interface CollectionViewProps {
-  collection: PlantItem[];
-  onDelete: (id: string) => void;
   onPlantClick: (plant: PlantItem) => void;
   onUploadClick: (file: File) => void;
   onBack: () => void;
 }
 
-const CollectionView: React.FC<CollectionViewProps> = ({ collection, onDelete, onPlantClick, onUploadClick, onBack }) => {
+const CollectionView: React.FC<CollectionViewProps> = ({ onPlantClick, onUploadClick, onBack }) => {
   const [plantToDelete, setPlantToDelete] = useState<PlantItem | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const { data: collectionData, isLoading } = useCollection();
+  const { mutateAsync: removePlant } = useRemoveFromCollection();
+
+  const collection = (collectionData?.data as any as PlantItem[]) || (collectionData as any as PlantItem[]) || [];
 
   const handleDeleteClick = (e: React.MouseEvent, plant: PlantItem) => {
     e.stopPropagation();
     setPlantToDelete(plant);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (plantToDelete) {
-      onDelete(plantToDelete.id);
+      await removePlant(plantToDelete.id);
       setPlantToDelete(null);
     }
   };

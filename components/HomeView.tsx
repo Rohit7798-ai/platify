@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { PlantItem } from '../types';
+import { useRecentScans } from '../src/hooks/usePlantify';
 
 interface HomeViewProps {
   onScanClick: () => void;
@@ -7,7 +8,6 @@ interface HomeViewProps {
   onRecentPlantClick: (plant: PlantItem) => void;
   onViewAllClick: () => void;
   onDiagnoseClick: () => void;
-  scanHistory?: PlantItem[];
 }
 
 const HomeView: React.FC<HomeViewProps> = ({
@@ -15,10 +15,13 @@ const HomeView: React.FC<HomeViewProps> = ({
   onUploadClick,
   onRecentPlantClick,
   onViewAllClick,
-  onDiagnoseClick,
-  scanHistory = []
+  onDiagnoseClick
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  
+  const { data: recentScansData } = useRecentScans();
+
+  const scanHistory: PlantItem[] = (recentScansData as any as PlantItem[]) || [];
 
   const handleUploadClick = () => {
     fileInputRef.current?.click();

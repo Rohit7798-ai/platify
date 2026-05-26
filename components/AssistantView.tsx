@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { askBotanist } from '../services/geminiService';
+import { useChatMessage } from '../src/hooks/usePlantify';
 import { ChatMessage } from '../types';
 
 // Utility to compress image inside the component to avoid prop drilling from App
@@ -39,6 +39,7 @@ const compressImage = (file: File): Promise<string> => {
 };
 
 const AssistantView: React.FC = () => {
+  const { mutateAsync: sendMessage } = useChatMessage();
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'welcome',
@@ -101,7 +102,8 @@ const AssistantView: React.FC = () => {
     setIsTyping(true);
 
     try {
-      const responseText = await askBotanist(currentText, currentImage || undefined);
+      const response = await sendMessage({ message: currentText, imageBase64: currentImage || undefined });
+      const responseText = response?.reply || "I'm having trouble connecting to the network right now. Please try asking again.";
       
       const botMsg: ChatMessage = {
         id: (Date.now() + 1).toString(),

@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ToolsView from './ToolsView';
 import ARView from './ARView';
 import ConsultView from './ConsultView';
 import { PlantItem } from '../types';
+import { useRecentScans } from '../src/hooks/usePlantify';
 
 interface ExploreViewProps {
-   scanHistory?: PlantItem[];
    onPlantClick?: (plant: PlantItem) => void;
 }
 
-const ExploreView: React.FC<ExploreViewProps> = ({ scanHistory = [], onPlantClick }) => {
+const ExploreView: React.FC<ExploreViewProps> = ({ onPlantClick }) => {
    const [view, setView] = useState<'main' | 'tools' | 'ar' | 'consult'>('main');
    const [searchTerm, setSearchTerm] = useState('');
+   
+   const { data: recentScansData } = useRecentScans();
+
+   const scanHistory: PlantItem[] = (recentScansData as any as PlantItem[]) || [];
 
    const categories = [
       { name: 'Indoor', icon: 'potted_plant', color: 'bg-green-100 text-green-700' },

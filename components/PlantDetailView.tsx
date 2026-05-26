@@ -1,18 +1,44 @@
 
 import React, { useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import { usePlantDetail } from '../src/hooks/usePlantify';
 import { PlantItem } from '../types';
 
 interface PlantDetailViewProps {
-  plant: PlantItem;
   onBack: () => void;
 }
 
-const PlantDetailView: React.FC<PlantDetailViewProps> = ({ plant, onBack }) => {
-  const { data, image, date, growthTimeline, wateringHistory } = plant;
+const PlantDetailView: React.FC<PlantDetailViewProps> = ({ onBack }) => {
+  const { id } = useParams<{ id: string }>();
+  const { data: plantData, isLoading, error } = usePlantDetail(id || '');
+  
   const [activeTab, setActiveTab] = useState<'overview' | 'care' | 'history' | 'timeline'>('overview');
   const [reminders, setReminders] = useState<Record<string, boolean>>({});
   const [showToast, setShowToast] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-background-light dark:bg-background-dark">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-forest mb-4"></div>
+        <p className="text-text-secondary">Loading plant details...</p>
+      </div>
+    );
+  }
+
+  if (error || !plantData) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-background-light dark:bg-background-dark p-6 text-center">
+        <span className="material-symbols-outlined text-red-500 text-6xl mb-4">error</span>
+        <h2 className="text-xl font-bold mb-2">Plant not found</h2>
+        <p className="text-text-secondary mb-6">The plant you're looking for doesn't exist or there was an error.</p>
+        <button onClick={onBack} className="px-6 py-2 bg-forest text-white rounded-full font-bold">Go Back</button>
+      </div>
+    );
+  }
+
+  const plant = plantData as unknown as PlantItem;
+  const { data, image, date, growthTimeline, wateringHistory } = plant;
 
   // Dummy placeholders for similar plants since API only gives text
   const placeholders = [
@@ -68,14 +94,14 @@ const PlantDetailView: React.FC<PlantDetailViewProps> = ({ plant, onBack }) => {
 
   const copyToClipboard = () => {
     const text = `
-Plant: ${data.commonName} (${data.scientificName})
-Description: ${data.description}
+Plant: ${data?.commonName} (${data?.scientificName})
+Description: ${data?.description}
 Care:
-- Light: ${data.careInstructions.light}
-- Water: ${data.careInstructions.water}
-- Soil: ${data.careInstructions.soil}
-- Fertilizer: ${data.careInstructions.fertilizer}
-Fun Fact: ${data.funFact}
+- Light: ${data?.careInstructions?.light || 'N/A'}
+- Water: ${data?.careInstructions?.water || 'N/A'}
+- Soil: ${data?.careInstructions?.soil || 'N/A'}
+- Fertilizer: ${data?.careInstructions?.fertilizer || 'N/A'}
+Fun Fact: ${data?.funFact}
 ${data.healthAssessment ? `
 Health Diagnosis: ${data.healthAssessment.diagnosis}
 Symptoms: ${data.healthAssessment.symptoms.join(', ')}
@@ -137,8 +163,8 @@ Treatment: ${data.healthAssessment.treatment.join(', ')}
           <div className="absolute bottom-0 left-0 right-0 p-6">
             <div className="flex justify-between items-end">
               <div>
-                <h1 className="text-3xl font-bold leading-tight mb-1">{data.commonName}</h1>
-                <p className="text-lg italic text-text-secondary dark:text-gray-400 opacity-90">{data.scientificName}</p>
+                <h1 className="text-3xl font-bold leading-tight mb-1">{data?.commonName || plant.name}</h1>
+                <p className="text-lg italic text-text-secondary dark:text-gray-400 opacity-90">{data?.scientificName || plant.scientificName}</p>
               </div>
               {data.isToxic && (
                 <div className="bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-sm">
@@ -179,7 +205,7 @@ Treatment: ${data.healthAssessment.treatment.join(', ')}
               onClick={() => setActiveTab('timeline')}
               className={`flex-1 min-w-[80px] pb-3 text-sm font-semibold transition-colors relative whitespace-nowrap ${activeTab === 'timeline' ? 'text-primary-dark dark:text-green-400' : 'text-text-secondary dark:text-gray-500'}`}
             >
-              Growth
+              Journal
               {activeTab === 'timeline' && <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-dark dark:bg-green-400 rounded-t-full"></div>}
             </button>
           </div>
@@ -270,10 +296,10 @@ Treatment: ${data.healthAssessment.treatment.join(', ')}
           {activeTab === 'care' && (
             <div className="grid grid-cols-1 gap-4 animate-spring-in">
               {[
-                { type: 'water', label: 'Watering', icon: 'water_drop', color: 'blue', value: data.careInstructions.water },
-                { type: 'light', label: 'Light', icon: 'light_mode', color: 'yellow', value: data.careInstructions.light },
-                { type: 'soil', label: 'Soil', icon: 'grass', color: 'orange', value: data.careInstructions.soil },
-                { type: 'fertilizer', label: 'Fertilizer', icon: 'eco', color: 'purple', value: data.careInstructions.fertilizer },
+                { type: 'water', label: 'Watering', icon: 'water_drop', color: 'blue', value: data?.careInstructions?.water },
+                { type: 'light', label: 'Light', icon: 'light_mode', color: 'yellow', value: data?.careInstructions?.light },
+                { type: 'soil', label: 'Soil', icon: 'grass', color: 'orange', value: data?.careInstructions?.soil },
+                { type: 'fertilizer', label: 'Fertilizer', icon: 'eco', color: 'purple', value: data?.careInstructions?.fertilizer },
               ].map((item) => (
                 <div
                   key={item.type}
@@ -328,51 +354,59 @@ Treatment: ${data.healthAssessment.treatment.join(', ')}
           )}
 
           {activeTab === 'timeline' && (
-            <div className="flex flex-col gap-6 animate-spring-in">
-
-              {/* Comparison View */}
-              {growthTimeline && growthTimeline.length >= 2 && (
-                <div className="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/10 dark:to-emerald-900/10 p-4 rounded-2xl border border-green-100 dark:border-white/10">
-                  <h3 className="text-center font-bold text-forest dark:text-sage mb-3 text-sm uppercase tracking-wider">Growth Comparison</h3>
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="flex-1 flex flex-col items-center">
-                      <img src={growthTimeline[0].image} className="w-full aspect-square object-cover rounded-xl shadow-md mb-2" alt="Start" />
-                      <span className="text-xs font-bold">{growthTimeline[0].date}</span>
-                    </div>
-                    <span className="material-symbols-outlined text-gray-400">arrow_forward</span>
-                    <div className="flex-1 flex flex-col items-center">
-                      <img src={growthTimeline[growthTimeline.length - 1].image} className="w-full aspect-square object-cover rounded-xl shadow-md mb-2" alt="Latest" />
-                      <span className="text-xs font-bold">{growthTimeline[growthTimeline.length - 1].date}</span>
-                    </div>
-                  </div>
-                </div>
-              )}
-
+            <div className="flex flex-col gap-8 animate-spring-in">
               <div className="flex justify-between items-center px-1">
-                <h4 className="font-semibold text-sm uppercase tracking-wide opacity-60">Progress Photos</h4>
-                <button
-                  onClick={handleAddTimelinePhoto}
-                  className="text-xs font-bold text-forest dark:text-sage flex items-center gap-1 bg-green-100 dark:bg-green-900/30 px-3 py-1.5 rounded-full"
-                >
-                  <span className="material-symbols-outlined text-sm">add_a_photo</span> Add Photo
-                </button>
-                <input ref={fileInputRef} type="file" className="hidden" accept="image/*" />
+                <h4 className="font-semibold text-sm uppercase tracking-wide opacity-60">Scan Journal</h4>
+                <div className="flex gap-2">
+                   <button
+                    onClick={handleAddTimelinePhoto}
+                    className="text-xs font-bold text-forest dark:text-sage flex items-center gap-1 bg-green-100 dark:bg-green-900/30 px-3 py-1.5 rounded-full"
+                  >
+                    <span className="material-symbols-outlined text-sm">add_a_photo</span> Add Photo
+                  </button>
+                  <input ref={fileInputRef} type="file" className="hidden" accept="image/*" />
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                {growthTimeline && growthTimeline.length > 0 ? (
-                  growthTimeline.map((entry, i) => (
-                    <div key={i} className="relative group">
-                      <img src={entry.image} className="w-full aspect-square object-cover rounded-xl shadow-sm" alt={entry.date} />
-                      <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black/70 to-transparent rounded-b-xl">
-                        <p className="text-white text-xs font-bold">{entry.date}</p>
-                        {entry.height && <p className="text-white/80 text-[10px]">{entry.height}</p>}
+              <div className="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-3.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-gray-200 dark:before:bg-white/10">
+                {data.analysis_history && data.analysis_history.length > 0 ? (
+                  data.analysis_history.map((entry: any, i: number) => (
+                    <div key={i} className="relative">
+                      {/* Timeline Dot */}
+                      <div className="absolute -left-[26px] top-1.5 size-4 rounded-full bg-forest dark:bg-green-500 border-4 border-background-light dark:border-background-dark z-10 shadow-sm"></div>
+                      
+                      <div className="bg-white dark:bg-white/5 rounded-2xl overflow-hidden shadow-subtle dark:shadow-subtle-dark border border-black/5 dark:border-white/5">
+                        <div className="flex gap-4 p-4">
+                          <div className="size-20 rounded-xl overflow-hidden shrink-0 shadow-sm">
+                            <img src={entry.image} className="w-full h-full object-cover" alt="Scan" />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex justify-between items-start mb-1">
+                              <p className="text-xs font-bold text-text-secondary dark:text-gray-500">
+                                {new Date(entry.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                              </p>
+                              {entry.healthAssessment && (
+                                <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${entry.healthAssessment.isHealthy ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'}`}>
+                                  {entry.healthAssessment.isHealthy ? 'Healthy' : 'Issues Detected'}
+                                </span>
+                              )}
+                            </div>
+                            <h4 className="font-bold text-sm mb-1">{entry.healthAssessment?.diagnosis || entry.commonName || "Scan Result"}</h4>
+                            <p className="text-xs text-text-secondary dark:text-gray-400 line-clamp-2 leading-relaxed">
+                              {entry.healthAssessment ? entry.healthAssessment.treatment.join(', ') : entry.description}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))
                 ) : (
-                  <div className="col-span-2 text-center py-8 opacity-50 border-2 border-dashed border-gray-200 dark:border-zinc-700 rounded-xl">
-                    <p>No timeline photos yet.</p>
+                  <div className="relative">
+                    <div className="absolute -left-[26px] top-1.5 size-4 rounded-full bg-gray-300 dark:bg-gray-600 border-4 border-background-light dark:border-background-dark z-10 shadow-sm"></div>
+                    <div className="p-10 text-center opacity-50 border-2 border-dashed border-gray-200 dark:border-zinc-700 rounded-2xl">
+                      <span className="material-symbols-outlined text-4xl mb-2">history</span>
+                      <p className="text-sm">No scans in your journal yet.</p>
+                    </div>
                   </div>
                 )}
               </div>

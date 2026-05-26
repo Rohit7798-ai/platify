@@ -12,6 +12,7 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose, onUpload, i
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const activeStreamRef = useRef<MediaStream | null>(null);
 
   const [mode, setMode] = useState<'identify' | 'diagnose'>(initialMode);
   const [error, setError] = useState<string | null>(null);
@@ -23,34 +24,56 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose, onUpload, i
   const themeColor = mode === 'identify' ? '#4ade80' : '#f59e0b'; // green-400 : amber-500
   const themeTailwind = mode === 'identify' ? 'green-500' : 'amber-500';
 
+  // Dedicated function to completely stop and release camera
+  const stopCamera = () => {
+    if (activeStreamRef.current) {
+      activeStreamRef.current.getTracks().forEach(track => {
+        track.stop();
+        track.enabled = false;
+      });
+      activeStreamRef.current = null;
+    }
+
+    if (videoRef.current) {
+      if (videoRef.current.srcObject) {
+        const currentStream = videoRef.current.srcObject as MediaStream;
+        currentStream.getTracks().forEach(track => {
+          track.stop();
+          track.enabled = false;
+        });
+      }
+      videoRef.current.srcObject = null;
+      videoRef.current.pause();
+      videoRef.current.load();
+    }
+  };
+
   useEffect(() => {
-    let stream: MediaStream | null = null;
+    let isMounted = true;
 
     const startCamera = async () => {
       try {
-        stream = await navigator.mediaDevices.getUserMedia({
+        const stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: 'environment',
             width: { ideal: 1280 },
             height: { ideal: 720 }
           }
         });
+
+        if (!isMounted) {
+          stream.getTracks().forEach(track => track.stop());
+          return;
+        }
+
+        activeStreamRef.current = stream;
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
       } catch (err: any) {
+        if (!isMounted) return;
         console.error("Error accessing camera:", err);
-        let errorMessage = "Could not access camera. Please check permissions.";
-
-        if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
-          errorMessage = "Camera permission was denied. Please allow camera access in your browser settings to scan plants.";
-        } else if (err.name === 'NotFoundError') {
-          errorMessage = "No camera found on this device.";
-        } else if (err.name === 'NotReadableError') {
-          errorMessage = "Camera is currently in use by another application.";
-        }
-
-        setError(errorMessage);
+        setError("Could not access camera. Please check permissions.");
         setIsLoading(false);
       }
     };
@@ -58,9 +81,8 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose, onUpload, i
     startCamera();
 
     return () => {
-      if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-      }
+      isMounted = false;
+      stopCamera();
     };
   }, []);
 
@@ -70,7 +92,6 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose, onUpload, i
       const video = videoRef.current;
       const canvas = canvasRef.current;
 
-      // Capture resolution
       const MAX_WIDTH = 1080;
       let width = video.videoWidth;
       let height = video.videoHeight;
@@ -88,7 +109,9 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose, onUpload, i
         context.drawImage(video, 0, 0, width, height);
         const imageSrc = canvas.toDataURL('image/jpeg', 0.8);
 
-        // Add a slight delay for the shutter effect feel
+        // Stop camera immediately after capture to turn off light
+        stopCamera();
+
         setTimeout(() => {
           onCapture(imageSrc, mode);
           setIsCapturing(false);

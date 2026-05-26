@@ -1,0 +1,190 @@
+{
+  "b036bb7bb22673725f23cef46a62ba8f": {
+    "data": {
+      "commonName": "Small Tree",
+      "scientificName": "None",
+      "description": "This is a small tree with a slender trunk and a rounded crown. It has dark green leaves that are oval-shaped and pointed at the tip.",
+      "careInstructions": {
+        "light": "Partial shade to full sun",
+        "water": "Regular watering, but avoid overwatering",
+        "soil": "Well-draining soil with a slightly acidic pH",
+        "fertilizer": "Fertilize during the growing season with a balanced fertilizer"
+      },
+      "funFact": "This tree is known for its ability to thrive in poor soil conditions.",
+      "isToxic": false,
+      "matchScore": 80,
+      "similarPlants": [
+        {
+          "name": "Oak Tree",
+          "imageAlt": "Oak Tree in a forest"
+        },
+        {
+          "name": "Maple Tree",
+          "imageAlt": "Maple Tree in autumn"
+        }
+      ]
+    },
+    "timestamp": 1779790142102
+  },
+  "03a8de3a5bb82459b4d3e1809ff3c392": {
+    "data": {
+      "commonName": "Bamboo",
+      "scientificName": "Bambusa vulgaris",
+      "description": "Bamboo is a type of evergreen perennial plant that belongs to the grass family. It is known for its fast growth rate and versatility.",
+      "careInstructions": {
+        "light": "Bamboo prefers bright, indirect light but can tolerate low light conditions.",
+        "water": "Bamboo requires consistent moisture, but make sure not to overwater as it can lead to root rot.",
+        "soil": "Bamboo thrives in well-draining soil with a slightly acidic pH.",
+        "fertilizer": "Bamboo benefits from regular fertilization during the growing season."
+      },
+      "funFact": "Bamboo is one of the fastest-growing plants in the world, with some species growing up to 3 feet per day.",
+      "isToxic": false,
+      "matchScore": 90,
+      "similarPlants": [
+        {
+          "name": "Dracaena",
+          "imageAlt": "Dracaena plant in a pot"
+        }
+      ]
+    },
+    "timestamp": 1779790667417
+  },
+  "45a87bef036faeed21aa4faa569db930": {
+    "data": {
+      "commonName": "Cactus",
+      "scientificName": "Cactaceae",
+      "description": "Cacti are a family of plants known for their unique ability to store water in their stems, allowing them to thrive in arid environments.",
+      "careInstructions": {
+        "light": "Cacti require bright, indirect light but can tolerate some direct sunlight.",
+        "water": "Water sparingly, allowing the soil to dry out completely between waterings.",
+        "soil": "Use well-draining soil to prevent waterlogged soil.",
+        "fertilizer": "Fertilize during the growing season with a balanced, water-soluble fertilizer."
+      },
+      "funFact": "Cacti have been on Earth for over 30 million years.",
+      "isToxic": false,
+      "matchScore": 100,
+      "similarPlants": [
+        {
+          "name": "Succulent",
+          "imageAlt": "A small, round succulent with thick, fleshy leaves."
+        }
+      ]
+    },
+    "timestamp": 1779790731200
+  },
+  "c85335e3202805e3881141af375ccdb7": {
+    "data": {
+      "commonName": "Eucalyptus",
+      "scientificName": "Eucalyptus globulus",
+      "description": "Eucalyptus is a popular ornamental plant known for its distinctive blue-green leaves and aromatic scent. It is native to Australia and is often used in floral arrangements and perfumes.",
+      "careInstructions": {
+        "light": "Eucalyptus prefers bright, indirect light but can tolerate some direct sunlight.",
+        "water": "Water Eucalyptus regularly, allowing the soil to dry slightly between waterings.",
+        "soil": "Use well-draining soil that is rich in organic matter.",
+        "fertilizer": "Fertilize Eucalyptus during the growing season with a balanced, water-soluble fertilizer."
+      },
+      "funFact": "Eucalyptus is a fast-growing tree that can reach heights of over 100 feet in ideal conditions.",
+      "isToxic": false,
+      "matchScore": 90,
+      "similarPlants": [
+        {
+          "name": "Lemon Eucalyptus",
+          "imageAlt": "Lemon-scented leaves"
+        }
+      ]
+    },
+    "timestamp": 1779790776145
+  },
+  "8eaebf6513321c029eb3ee9e1a02f672": {
+    "data": {
+      "commonName": "Lemon Tree",
+      "scientificName": "Citrus limon",
+      "description": "The Lemon Tree is a popular fruit-bearing tree known for its bright yellow fruit and fragrant flowers. It is commonly grown in warm climates for its edible fruit and ornamental value.",
+      "careInstructions": {
+        "light": "Full sun to partial shade",
+        "water": "Regular watering, but avoid overwatering",
+        "soil": "Well-draining soil with a pH between 6.0 and 6.5",
+        "fertilizer": "Fertilize regularly during the growing season"
+      },
+      "funFact": "Lemon trees can live for up to 100 years in ideal conditions.",
+      "isToxic": false,
+      "matchScore": 90,
+      "similarPlants": [
+        {
+          "name": "Orange Tree",
+          "imageAlt": "A tree with orange fruit"
+        },
+        {
+          "name": "Lime Tree",
+          "imageAlt": "A tree with green fruit"
+        }
+      ]
+    },
+    "timestamp": 1779790889569
+  },
+  "ffcbfc7d0d76f669f10b391204a14d32": {
+    "data": {
+      "commonName": "Swiss Cheese Plant",
+      "scientificName": "Monstera deliciosa",
+      "description": "Monstera deliciosa is a species of flowering plant native to tropical regions of Central and South America. It is known for its large, glossy leaves with holes and tears that resemble Swiss cheese.",
+      "careInstructions": {
+        "light": "Bright, indirect light",
+        "water": "Allow the top 1-2 inches of soil to dry out between waterings",
+        "soil": "Well-draining potting mix",
+        "fertilizer": "Feed with a balanced fertilizer during the growing season"
+      },
+      "funFact": "Monstera deliciosa is also known as the 'Split-Leaf Philodendron' due to its unique leaf shape.",
+      "isToxic": true,
+      "matchScore": 100,
+      "similarPlants": [
+        {
+          "name": "Philodendron Selloum",
+          "imageAlt": "Philodendron Selloum"
+        }
+      ]
+    },
+    "timestamp": 1779791172497
+  },
+  "d89746888da2d9510b64a9f031eaecd5": {
+    "data": {
+      "commonName": "English Ivy",
+      "scientificName": "Hedera helix",
+      "speciesClassification": {
+        "kingdom": "Plantae",
+        "family": "Araliaceae",
+        "genus": "Hedera",
+        "species": "helix"
+      },
+      "description": "English Ivy is a versatile, evergreen climber with lobed leaves and woody stems.",
+      "careInstructions": {
+        "light": "Partial shade to full sun",
+        "water": "Regular watering, but avoid overwatering",
+        "soil": "Well-draining soil",
+        "fertilizer": "Fertilize during the growing season",
+        "growthConditions": "Moderate temperatures and humidity"
+      },
+      "funFact": "English Ivy is a popular houseplant and can be trained to climb walls or trellises.",
+      "isToxic": true,
+      "toxicityDetails": "English Ivy is toxic to humans and pets if ingested, causing nausea and vomiting.",
+      "medicinalOrAgriculturalUses": "English Ivy has been used in traditional medicine for its antiseptic and anti-inflammatory properties.",
+      "matchScore": 100,
+      "confidenceScore": 100,
+      "similarPlants": [
+        {
+          "name": "Boston Ivy",
+          "imageAlt": "Boston Ivy plant"
+        }
+      ],
+      "lowConfidenceDetails": null,
+      "healthAssessment": {
+        "isHealthy": true,
+        "diagnosis": "Healthy plant",
+        "symptoms": [],
+        "causes": [],
+        "treatment": [],
+        "prevention": []
+      }
+    },
+    "timestamp": 1779791583831
+  }
+}
